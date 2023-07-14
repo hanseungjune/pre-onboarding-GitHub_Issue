@@ -15,6 +15,7 @@ export const IssueContext = createContext({
   issues: [] as issuesType[],
   fetchIssue: () => {},
   loading: true,
+  error: false,
 });
 
 export const IssueProvider = ({ children }: any) => {
@@ -24,6 +25,7 @@ export const IssueProvider = ({ children }: any) => {
   const perPage = 24;
   const accessToken: string = process.env.REACT_APP_GITHUB_ACCESS_TOKEN || '';
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleIntersection = (entries: any) => {
     const target = entries[0];
@@ -70,6 +72,7 @@ export const IssueProvider = ({ children }: any) => {
       setPage(prevPage => prevPage + 1);
     } catch (error) {
       console.log(error);
+      setError(true);
     }
     setLoading(false);
   };
@@ -95,7 +98,7 @@ export const IssueProvider = ({ children }: any) => {
   }, [page]);
 
   return (
-    <IssueContext.Provider value={{ issues, fetchIssue, loading }}>
+    <IssueContext.Provider value={{ issues, fetchIssue, loading, error }}>
       {children}
       <div ref={sentinelRef} style={{ height: '10px' }} />
     </IssueContext.Provider>

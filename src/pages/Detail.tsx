@@ -3,6 +3,7 @@ import IssueContent from '../components/IssueContent';
 import { styled } from 'styled-components';
 import { IssueDetailContext } from '../api/IssueDetailContext';
 import Loading from '../components/Loading';
+import ErrorScreen from '../components/ErrorScreen';
 
 const IssueDetailBodyStyle = styled.div`
   width: 75vw;
@@ -22,7 +23,7 @@ const IssueDetailBodyStyle = styled.div`
 
 const Detail = () => {
   const [text, setText] = useState<string[] | null | undefined>([]);
-  const { issueDetail, loading } = useContext(IssueDetailContext);
+  const { issueDetail, loading, error } = useContext(IssueDetailContext);
 
   useEffect(() => {
     const bodySplit = issueDetail?.body?.split('\n');
@@ -31,6 +32,10 @@ const Detail = () => {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorScreen />;
   }
 
   return (

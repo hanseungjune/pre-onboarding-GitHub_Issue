@@ -13,6 +13,7 @@ export const IssueDetailContext = createContext({
     body: null,
   } as fetchIssueType,
   loading: true,
+  error: false,
 });
 
 export interface fetchIssueType {
@@ -38,6 +39,7 @@ export const IssueDetailProvider = ({ children }: any) => {
   });
   const accessToken: string = process.env.REACT_APP_GITHUB_ACCESS_TOKEN || '';
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const fetchIssueDetail = async () => {
     setLoading(true);
@@ -66,6 +68,7 @@ export const IssueDetailProvider = ({ children }: any) => {
       setIssueDetail(item);
     } catch (error) {
       console.log(error);
+      setError(true);
     }
     setLoading(false);
   };
@@ -75,7 +78,7 @@ export const IssueDetailProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <IssueDetailContext.Provider value={{ issueDetail, loading }}>
+    <IssueDetailContext.Provider value={{ issueDetail, loading, error }}>
       {children}
     </IssueDetailContext.Provider>
   );

@@ -3,12 +3,17 @@ import IssueContent from '../components/IssueContent';
 import IssueImg from '../components/IssueImg';
 import { IssueContext } from '../api/IssueContext';
 import Loading from '../components/Loading';
+import ErrorScreen from '../components/ErrorScreen';
 
 const Issue = () => {
-  const { issues, loading } = useContext(IssueContext);
+  const { issues, loading, error } = useContext(IssueContext);
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorScreen />;
   }
 
   return (
