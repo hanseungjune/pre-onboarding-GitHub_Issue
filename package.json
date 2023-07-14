@@ -1,4 +1,5 @@
 {
+  "homepage": "/issue",
   "name": "team3-week1-assignment",
   "version": "0.1.0",
   "private": true,
@@ -13,6 +14,7 @@
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.7",
     "react-router-dom": "^6.14.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.0.0",
