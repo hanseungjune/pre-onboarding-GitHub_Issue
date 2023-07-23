@@ -1,6 +1,6 @@
 import { createContext, useEffect, useRef, useState } from 'react';
 
-interface issuesType {
+export interface issuesType {
   state?: string | null;
   id?: number;
   title?: string | null;

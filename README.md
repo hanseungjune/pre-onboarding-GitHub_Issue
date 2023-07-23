@@ -211,4 +211,90 @@
 
 - Case 02.
 
-  - 라우터
+  - Issues && Detail
+
+  ```ts
+  const Issue = () => {
+    const { issues, loading, error } = useContext(IssueContext);
+
+    if (loading) {
+      return <Loading />;
+    }
+    if (error) {
+      return <ErrorScreen />;
+    }
+
+    return (
+      <>
+        {issues.map((issue, index) => {
+          if (issue.state !== 'img') {
+            return (
+              <IssueContent
+                key={issue.id}
+                id={issue.id}
+                title={issue.title}
+                user={issue.user}
+                updateAt={issue.updated_at}
+                comments={issue.comments}
+              />
+            );
+          } else {
+            return <IssueImg key={`${issue.src}-${index}`} src={issue.src} />;
+          }
+        })}
+      </>
+    );
+  };
+
+  export default Issue;
+  ```
+
+  해당 코드가 좀 이해하기에는 복잡성이 높다고 생각했고, 관심사의 분리가 제대로 되어있지 않다고 생각하여, 기능을 구현하는 함수는 Custom Hook으로 만들었고, 컴포넌트를 조금 더 세밀하게 쪼갤 수 있어서, 컴포넌트를 하나 더 만들었다.
+
+  ```ts
+  export const useIssues = () => {
+    const { issues, loading, error } = useContext(IssueContext);
+
+    return { issues, loading, error };
+  };
+  ```
+
+  Context API의 결과물을 가지고 올 수 있는 것을 Hook으로 따로 빼내서 관심사를 분리 시켜버렸다.
+
+  ```ts
+  export const renderIssue = (issue: issuesType, index: number) => {
+    if (issue.state !== 'img') {
+      return (
+        <IssueContent
+          key={issue.id}
+          id={issue.id}
+          title={issue.title}
+          user={issue.user}
+          updateAt={issue.updated_at}
+          comments={issue.comments}
+        />
+      );
+    } else {
+      return <IssueImg key={`${issue.src}-${index}`} src={issue.src} />;
+    }
+  };
+
+  const Issue = () => {
+    const { issues, loading, error } = useContext(IssueContext);
+
+    if (loading) {
+      return <Loading />;
+    }
+    if (error) {
+      return <ErrorScreen />;
+    }
+
+    return <>{issues.map(renderIssue)}</>;
+  };
+
+  export default Issue;
+  ```
+
+  서브 컴포넌트 파일을 따로 만들어버릴까 하다가 횡단 관심사라는 것이 생각나서, 컴포넌트를 만들어서 UI자체를 분할하되 절차지향으로 컴포넌트를 배치해서 연결성을 보여주는 것이 좋다고 생각하여 이렇게 코드를 작성했다. 그래서 main 컴포넌트인 issues 컴포넌트가 조금 더 가독성이 좋아보였다.
+
+  
