@@ -29,6 +29,10 @@ const GlobalStyle = createGlobalStyle`
 
   #root, html {
     background-color: #17324a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `;
 

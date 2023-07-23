@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { IssueDetailContext } from '../api/IssueDetailContext';
 import Loading from '../components/Loading';
 import ErrorScreen from '../components/ErrorScreen';
+import { useParams } from 'react-router-dom';
 
 const IssueDetailBodyStyle = styled.div`
   width: 75vw;
@@ -22,8 +23,16 @@ const IssueDetailBodyStyle = styled.div`
 `;
 
 const Detail = () => {
+  const { id } = useParams();
   const [text, setText] = useState<string[] | null | undefined>([]);
-  const { issueDetail, loading, error } = useContext(IssueDetailContext);
+  const { issueDetail, loading, error, fetchIssueDetail } =
+    useContext(IssueDetailContext);
+
+  useEffect(() => {
+    if (id) {
+      fetchIssueDetail(id);
+    }
+  }, [id]);
 
   useEffect(() => {
     const bodySplit = issueDetail?.body?.split('\n');
@@ -33,7 +42,6 @@ const Detail = () => {
   if (loading) {
     return <Loading />;
   }
-
   if (error) {
     return <ErrorScreen />;
   }
@@ -49,7 +57,7 @@ const Detail = () => {
         img={issueDetail.avatar_url}
       />
       <IssueDetailBodyStyle>
-        {text?.map((content: string) => {
+        {text?.map((content: string, idx: number) => {
           const firstWord = content.split(' ')[0];
           const remainingContent = content.substring(firstWord.length).trim();
           let headingLevel = 0;
@@ -65,6 +73,7 @@ const Detail = () => {
           }
           return (
             <div
+              key={idx}
               style={{
                 fontSize:
                   headingLevel !== 0 ? `${24 - headingLevel * 2}px` : 'inherit',

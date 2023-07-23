@@ -1,5 +1,4 @@
 import { createContext, useEffect, useRef, useState } from 'react';
-import { API_URL } from '../App';
 
 interface issuesType {
   state?: string | null;
@@ -37,44 +36,47 @@ export const IssueProvider = ({ children }: any) => {
   const fetchIssue = async () => {
     setLoading(true);
     try {
-      const items: issuesType[] = []; // 이슈 데이터를 저장할 지역 변수
-      const response = await fetch(
-        `${API_URL}/repos/facebook/react/issues?page=${page}&per_page=${perPage}&sort=comments`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      const data: any[] = await response.json();
-      // 이슈번호, 이슈제목, 작성자, 작성일, 코멘트수, 이슈상태
-      for (let i = 0; i < data.length; i++) {
-        items.push({
-          state: data[i].state,
-          id: data[i].number,
-          title: data[i].title,
-          user: data[i].user.login,
-          updated_at: `${new Date(data[i].updated_at).getFullYear()}년 ${
-            new Date(data[i].updated_at).getMonth() + 1
-          }월 ${new Date(data[i].updated_at).getDate()}일`,
-          comments: data[i].comments,
-        });
-        // 5번째 되면 넣어주기
-        if (i % 4 === 3) {
+      if (process.env.REACT_APP_GITHUB_API_URL) {
+        const items: issuesType[] = []; // 이슈 데이터를 저장할 지역 변수
+        const response = await fetch(
+          `${process.env.REACT_APP_GITHUB_API_URL}/repos/facebook/react/issues?page=${page}&per_page=${perPage}&sort=comments`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const data: any[] = await response.json();
+        // 이슈번호, 이슈제목, 작성자, 작성일, 코멘트수, 이슈상태
+        for (let i = 0; i < data.length; i++) {
           items.push({
-            state: 'img',
-            src: `https://blog.kakaocdn.net/dn/0aDVr/btrbQaX9WJr/p63pboivEKfeoYcIDKQYN1/img.jpg`,
+            state: data[i].state,
+            id: data[i].number,
+            title: data[i].title,
+            user: data[i].user.login,
+            updated_at: `${new Date(data[i].updated_at).getFullYear()}년 ${
+              new Date(data[i].updated_at).getMonth() + 1
+            }월 ${new Date(data[i].updated_at).getDate()}일`,
+            comments: data[i].comments,
           });
+          // 5번째 되면 넣어주기
+          if (i % 4 === 3) {
+            items.push({
+              state: 'img',
+              src: `https://blog.kakaocdn.net/dn/0aDVr/btrbQaX9WJr/p63pboivEKfeoYcIDKQYN1/img.jpg`,
+            });
+          }
         }
+        setIssues(prevIssues => [...prevIssues, ...items]);
+        setPage(prevPage => prevPage + 1);
       }
-      setIssues(prevIssues => [...prevIssues, ...items]);
-      setPage(prevPage => prevPage + 1);
     } catch (error) {
       console.log(error);
       setError(true);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {

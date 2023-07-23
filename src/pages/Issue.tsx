@@ -11,7 +11,6 @@ const Issue = () => {
   if (loading) {
     return <Loading />;
   }
-
   if (error) {
     return <ErrorScreen />;
   }
@@ -31,7 +30,7 @@ const Issue = () => {
             />
           );
         } else {
-          return <IssueImg key={index} src={issue.src} />;
+          return <IssueImg key={`${issue.src}-${index}`} src={issue.src} />;
         }
       })}
     </>

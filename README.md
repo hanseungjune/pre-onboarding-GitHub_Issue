@@ -1,46 +1,214 @@
-# Getting Started with Create React App
+# ToyPJT - GitHub Issue Web Page
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+👆🏻 제목을 클릭하면 배포된 사이트를 확인하실 수 있습니다.
 
-## Available Scripts
+<br/>
 
-In the project directory, you can run:
+## 🗓️ 기간
 
-### `npm start`
+- 2023년 7월 11일 ~ 2023년 07월 14일
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🧭 목적
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [GitHub REST API](https://docs.github.com/en/rest)로 GitHub Issue 페이지 구현하기
+- 무한 스크롤을 사용해서 HTTPS 요청 해보기
 
-### `npm test`
+<br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✅ Task
 
-### `npm run build`
+### ❗필수 요구 사항
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- ⭕ 이슈 목록 및 상세 화면 기능 구현
+- ⭕ Context API를 활용한 API 연동
+- ⭕ 데이터 요청 중 로딩 표시
+- ⭕ 에러 화면 구현
+- ⭕ 지정된 조건(open 상태, 코멘트 많은 순)에 맞게 데이터 요청 및 표시
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### ❗범위
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. 이슈 목록 화면
 
-### `npm run eject`
+   - ⭕ 이슈 목록 가져오기 API 활용
+   - ⭕ open 상태의 이슈 중 코멘트가 많은 순으로 정렬
+   - ⭕ 각 행에는 ‘이슈번호, 이슈제목, 작성자, 작성일, 코멘트수’를 표시
+   - ⭕ 다섯번째 셀마다 광고 이미지 출력
+   - ⭕ 화면을 아래로 스크롤 할 시 이슈 목록 추가 로딩(인피니티 스크롤)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. 이슈 상세 화면
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   - ⭕ 이슈의 상세 내용 표시
+   - ⭕ ‘이슈번호, 이슈제목, 작성자, 작성일, 코멘트 수, 작성자 프로필 이미지, 본문' 표시
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+3. 공통 헤더
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   - ⭕ 두 페이지는 공통 헤더를 공유합니다.
+   - ⭕ 헤더에는 Organization Name / Repository Name이 표시됩니다.
 
-## Learn More
+<br/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 💡 진행방식
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1.  컨벤션을 지정하여 [위키](https://github.com/hanseungjune/pre-onboarding-11th-3-3/wiki/Editing--Convention)에 정리해 두었습니다.
+
+2.  구현을 우선순위로하고, 트러블 슈팅이나 리팩토링 할 부분이 있다면, 추가적으로 진행할 예정입니다.
+
+<br/>
+
+## 🎖️ Members
+
+<table border>
+  <tbody>
+    <tr>
+      <td align="center" width="200px">
+        <img width="100%" src="https://avatars.githubusercontent.com/u/92035406?v=4"  alt=""/>
+        FE.<br/>
+        <a href="https://github.com/hanseungjune">
+          <img src="https://img.shields.io/badge/한승준-000000?style=flat-round&logo=GitHub&logoColor=white"/>
+        </a>
+      </td>
+     </tr>
+  </tbody>
+</table>
+
+<br/>
+
+## 🛠️ Stacks
+
+![react](https://user-images.githubusercontent.com/123078739/234895132-18ab503a-fcc7-486d-b89a-cb0cc1f7796b.svg) ![eslint](https://user-images.githubusercontent.com/123078739/234895191-c1198a7b-9e2e-499a-8e61-c3b87bf8e2c2.svg)
+![prettier](https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black) ![typescript](https://user-images.githubusercontent.com/123078739/234895162-42f905c6-765d-44d2-bcb1-b011286ef6b2.svg) ![styledcomponents](https://user-images.githubusercontent.com/123078739/234895185-7fd6c334-faca-4520-8551-2f20b32f085e.svg)
+
+<br/>
+
+### 📍 기능
+
+- 이슈 목록
+- 이슈 상세
+- 이슈 목록 인피니티 스크롤
+
+<table border>
+  <tr>
+    <td><img src="./GitHub Issues Pages.gif" alt="GitHub issue Page"/></td>
+  </tr>
+  <tr>
+    <td align="center">GitHub issue Page</td>
+  </tr>
+</table>
+
+### 🌳 File Tree
+
+```
+📦src
+ ┣ 📂api
+ ┃ ┣ 📜IssueContext.tsx
+ ┃ ┗ 📜IssueDetailContext.tsx
+ ┣ 📂components
+ ┃ ┣ 📜ErrorScreen.tsx
+ ┃ ┣ 📜Header.tsx
+ ┃ ┣ 📜IssueContent.tsx
+ ┃ ┣ 📜IssueImg.tsx
+ ┃ ┣ 📜Layout.tsx
+ ┃ ┗ 📜Loading.tsx
+ ┣ 📂pages
+ ┃ ┣ 📜Detail.tsx
+ ┃ ┣ 📜Issue.tsx
+ ┃ ┗ 📜NotFound.tsx
+ ┣ 📂styles
+ ┃ ┗ 📜issuesStyle.ts
+ ┣ 📜App.tsx
+ ┣ 📜GlobalStyle.ts
+ ┣ 📜index.tsx
+ ┗ 📜react-app-env.d.ts
+```
+
+### ✨ GitHub Issues Web Page
+
+#### 💥리팩토링
+
+- Case 01.
+
+  - 라우터
+
+  ```js
+  <Router>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route
+          path="/issue"
+          element={
+            <IssueProvider>
+              <Issue />
+            </IssueProvider>
+          }
+        />
+        <Route
+          path="/issue/:id"
+          element={
+            <IssueDetailProvider>
+              <Detail />
+            </IssueDetailProvider>
+          }
+        />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </Router>
+  ```
+
+  - 해당코드가 길어지면, App 최상위 컴포넌트의 코드가 복잡성이 너무 높아진다. 그리고 관심사의 분리가 안되어있다고 생각했다. 그래서 router에대한 파일을 따로 만들고 App에 import 하는 방식으로 진행하는게 맞지 않나 하는 생각이 들어서 그런 생각으로 작업했다.
+
+  ```ts
+  // 여기서는 페이지 컴포넌트를 레이지 로딩합니다.
+  // 해당 컴포넌트가 실제로 필요한 시점에만 로드되도록 하기 위함입니다.
+  const Issue = lazy(() => import('./pages/Issue'));
+  const Detail = lazy(() => import('./pages/Detail'));
+  const NotFound = lazy(() => import('./pages/NotFound'));
+
+  const RouterComponent = () => (
+    <Router>
+      <Routes>
+        <Route index element={<Issue />} />
+        <Route path="/issues" element={<Issue />} />
+        <Route path="/issues/:id" element={<Detail />} />
+        <Route path="/notFound" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
+  );
+
+  export default RouterComponent;
+  ```
+  
+  React의 lazy는 React 컴포넌트의 코드 분할을 가능하게 하는 기능입니다. 일반적으로 웹 페이지는 처음 로딩될 때 모든 스크립트를 한 번에 다운로드받습니다. 하지만 이런 방식은 페이지가 복잡해지고 커질수록 초기 로딩 속도가 느려집니다.
+
+  lazy를 사용하면 사용자가 실제로 해당 컴포넌트를 보려고 할 때 (예: 특정 라우트에 접근할 때) 해당 컴포넌트의 코드를 로드합니다. 이는 네트워크 사용량을 줄이고 애플리케이션의 초기 로딩 속도를 향상시킵니다.
+
+  ```ts
+  function App() {
+    return (
+      <>
+        <GlobalStyle />
+        <Header />
+        <IssueProvider>
+          <IssueDetailProvider>
+            <Suspense fallback={<Loading />}>
+              <RouterComponent />
+            </Suspense>
+          </IssueDetailProvider>
+        </IssueProvider>
+      </>
+    );
+  }
+
+  export default App;
+  ```
+
+  Suspense와 fallback 속성은 React의 코드 분할 기능을 더 잘 활용하도록 도와줍니다.
+
+  Suspense는 어떤 컴포넌트의 렌더링이 지연되는 동안(예: 데이터를 불러오거나, lazy로 코드 분할된 컴포넌트를 불러오는 경우 등) 임시로 다른 컴포넌트를 보여줄 수 있게 합니다. 예를 들어, 아직 로드되지 않은 컴포넌트가 있을 때 로딩 인디케이터를 보여주는 등의 처리를 할 수 있습니다.
+
+  fallback 속성은 Suspense 컴포넌트가 감싸고 있는 컴포넌트들 중 하나라도 아직 준비되지 않았을 때 보여주는 대체 컴포넌트를 지정합니다. 예를 들어, fallback={<Loading />}라고 지정하면 아직 로드되지 않은 컴포넌트가 있을 때 Loading 컴포넌트를 보여줍니다.
+
+- Case 02.
+
+  - 라우터

@@ -22,8 +22,12 @@ const IssueContent = ({
   // eslint-disable-next-line no-unused-vars
   const isImg = Boolean(img);
 
-  const DetailLinked = () => {
-    navigate(`/issue/${id}`);
+  const DetailLinked = (id: number | null | undefined) => {
+    if (id) {
+      return () => {
+        navigate(`/issues/${id}`);
+      };
+    }
   };
 
   return (
@@ -49,7 +53,7 @@ const IssueContent = ({
           </div>
         </IssueDetailDivStyle>
       ) : (
-        <IssueDivStyle onClick={DetailLinked}>
+        <IssueDivStyle onClick={DetailLinked(id)}>
           <div>
             <div>
               <span>#{id}</span>
