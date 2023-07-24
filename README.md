@@ -571,12 +571,124 @@
       };
       ```
 
-      Intersection Observer API 기반으로 무한스크롤을 구현하는 프로바이더 코드를 분리하여 관심사 분리를 하고, 횡단 관심사를 유지 할 수 있게 합니다. 참고로 하나의 파일 안에 모두 작성되어있습니다. 재사용에 대한 필요성을 느끼지 않아서 파일을 따로 만들지않고, 오히려 같이 나열하여 코드의 흐름을 한눈에 파악하여 유지보수를 하기 쉽게하려고 해당 코드를 작성하였습니다.
+      Intersection Observer API 기반으로 무한스크롤을 구현하는 프로바이더 코드를 분리하여 관심사 분리를 하고, 횡단 관심사를 유지 할 수 있게 합니다.
 
     - Context API (IssueDetailContext)
 
       횡단 관심사에 대한 분리가 되어있지 않아서 Custom Hook을 통해 관심사 분리를 하였습니다. 
       
       ```ts
-      
+      export const useFetchDetail = () => {
+        const [issueDetail, setIssueDetail] = useState<fetchIssueType>({
+          avatar_url: undefined,
+          number: null,
+          title: null,
+          login: null,
+          updated_at: null,
+          comments: undefined,
+          body: null,
+        });
+
+        const accessToken: string = process.env.REACT_APP_GITHUB_ACCESS_TOKEN || '';
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState(false);
+
+        const fetchIssueDetail = async (id: string) => {
+          setLoading(true);
+          try {
+            if ((process.env.REACT_APP_GITHUB_API_URL || '') && id && accessToken) {
+              const response = await fetch(
+                `${
+                  process.env.REACT_APP_GITHUB_API_URL || ''
+                }/repos/facebook/react/issues/${id}`,
+                {
+                  method: 'GET',
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
+              const data = await response.json();
+              let item = {
+                avatar_url: data.user?.avatar_url,
+                number: data.number,
+                title: data.title,
+                login: data.user?.login,
+                updated_at: formatDate(data.updated_at),
+                comments: data.comments,
+                body: data.body,
+              };
+              setIssueDetail(item);
+            }
+          } catch (error) {
+            console.log(error);
+            setError(true);
+          } finally {
+            setLoading(false);
+          }
+        };
+
+        return { issueDetail, loading, error, fetchIssueDetail };
+      };
       ```
+
+      useFetchDetail을 통해서 id마다 fetch 할 수 있게 넘겨주고,
+      원하는 데이터 형태로 issueDetail을 만들어서 보여준다.
+
+      ```ts
+      // 컨텍스트 생성
+      export const IssueDetailContext = createContext({
+        issueDetail: {
+          avatar_url: undefined,
+          number: null,
+          title: null,
+          login: null,
+          updated_at: null,
+          comments: undefined,
+          body: null,
+        } as fetchIssueType,
+        loading: true,
+        error: false,
+        fetchIssueDetail: (id: string) => {},
+      });
+
+      // 이슈의 세부 내용 상태를 관리
+      export const IssueDetailProvider = ({ children }: any) => {
+        const { issueDetail, loading, error, fetchIssueDetail } = useFetchDetail();
+
+        return (
+          <IssueDetailContext.Provider
+            value={{ issueDetail, loading, error, fetchIssueDetail }}
+          >
+            {children}
+          </IssueDetailContext.Provider>
+        );
+      };
+      ```
+
+      전역으로 해당 데이터 및 fetch 함수 보내기 위해서 Context API를 활용한다.
+
+<br/>
+
+## ✒️ 회고
+
+<table>
+  <thead>
+    <tr>
+      <th width="50%">좋았던 점</th>
+      <th width="50%">아쉬웠던 점</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+      <li>무한스크롤을 예전 프로젝트에서 구현하지 못해서 그냥 Get 요청으로하고, 페이지네이션을 사용했던 적이 있는데, 이번 과제를 통해서 무한 스크롤에 집중해볼 수 있어서 좋았습니다.</li>
+      <li>리팩토링을 통해서 관심사의 분리와 Custom Hook에 대해서 깊게 생각해보고 실행했는데, 하고 보니 나중에 유지보수 자체를 하는 것에 되게 편할 것이라고 생각이 들어서 좋았던 것 같다.</li>
+      </td>
+      <td>
+      <li>개인적인 사정으로 과제를 3일 정도 늦게 시작했다. 그래서 거의 하루이틀만에 만들려고 하다보니 퀄리티가 예상보다 조금 떨어졌다고 생각한다.</li>
+      <li>원래는 동료학습을 했어야 했는데, 개인적인 사정으로 혼자 과제를 해야하는 입장이라서 조금 아쉬웠다. 다음에는 동료학습에 충실하여 다른 사람들의 코드도 참고하면서 성장하고 싶다.</li>
+      </td>
+    </tr>
+  </tbody>
+</table>

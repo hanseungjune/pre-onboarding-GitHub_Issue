@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import IssueContent from '../components/IssueContent';
 import IssueImg from '../components/IssueImg';
-import { IssueContext, issuesType } from '../api/IssueContext';
 import Loading from '../components/Loading';
 import ErrorScreen from '../components/ErrorScreen';
+import { issuesType } from '../hooks/useFetchIssues';
+import { IssueContext } from '../api/IssueContext';
 
 export const renderIssue = (issue: issuesType, index: number) => {
   if (issue.state !== 'img') {

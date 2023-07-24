@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { formatDate } from '../api/IssueContext';
+import { formatDate } from './useFetchIssues';
 
 export interface fetchIssueType {
   avatar_url?: string | undefined;
