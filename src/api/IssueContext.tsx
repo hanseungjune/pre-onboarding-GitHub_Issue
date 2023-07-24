@@ -73,7 +73,7 @@ const fetchIssueFromGithub = async (page: number, perPage: number) => {
 };
 
 // 날짜를 형식에 맞게 포맷팅
-const formatDate = (dateString: string) => {
+export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 };

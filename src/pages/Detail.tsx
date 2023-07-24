@@ -3,7 +3,8 @@ import { styled } from 'styled-components';
 import Loading from '../components/Loading';
 import ErrorScreen from '../components/ErrorScreen';
 import { useParams } from 'react-router-dom';
-import { useIssueDetail } from '../hooks/useIssueDetail';
+import { useContext, useEffect } from 'react';
+import { IssueDetailContext } from '../api/IssueDetailContext';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import 'github-markdown-css';
 
@@ -25,7 +26,14 @@ const IssueDetailBodyStyle = styled.div`
 
 const Detail = () => {
   const { id } = useParams();
-  const { issueDetail, loading, error } = useIssueDetail(id);
+  const { issueDetail, loading, error, fetchIssueDetail } =
+    useContext(IssueDetailContext);
+
+  useEffect(() => {
+    if (id) {
+      fetchIssueDetail(id);
+    }
+  }, [id]);
 
   if (loading) {
     return <Loading />;
