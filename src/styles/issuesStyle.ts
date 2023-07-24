@@ -7,7 +7,7 @@ export const IssueDivStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000000;
+  background-color: #121212;
   border-radius: 20px;
   box-shadow: 5px 5px 10px #5391b4;
   margin-bottom: 1%;
@@ -101,7 +101,7 @@ export const IssueDetailDivStyle = styled.div`
   border-bottom: 2px solid black;
   display: flex;
   align-items: center;
-  background-color: #000000;
+  background-color: #000418;
   border-radius: 20px;
   box-shadow: 5px 5px 10px #5391b4;
   margin-bottom: 1%;

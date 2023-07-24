@@ -427,4 +427,10 @@
       ReactMarkdown 라이브러리를 통해서 issueDetail.body 를 통으로 받아와서 마크다운을 HTML로 파싱하는 작업을 한다.
       그리고 issueDetail에 대한 관심사 분리를 통해서 useIssueDetail라는 Hook을 만들어서 사용하여 export 해온다.
 
+  - Case 03.
+
+    - Context API
+
+      ```ts
       
+      ```
