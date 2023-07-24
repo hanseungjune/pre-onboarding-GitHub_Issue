@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
 import IssueContent from '../components/IssueContent';
 import { styled } from 'styled-components';
-import { IssueDetailContext } from '../api/IssueDetailContext';
 import Loading from '../components/Loading';
 import ErrorScreen from '../components/ErrorScreen';
 import { useParams } from 'react-router-dom';
+import { useIssueDetail } from '../hooks/useIssueDetail';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import 'github-markdown-css';
 
 const IssueDetailBodyStyle = styled.div`
   width: 75vw;
@@ -24,20 +25,7 @@ const IssueDetailBodyStyle = styled.div`
 
 const Detail = () => {
   const { id } = useParams();
-  const [text, setText] = useState<string[] | null | undefined>([]);
-  const { issueDetail, loading, error, fetchIssueDetail } =
-    useContext(IssueDetailContext);
-
-  useEffect(() => {
-    if (id) {
-      fetchIssueDetail(id);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    const bodySplit = issueDetail?.body?.split('\n');
-    setText(bodySplit || []);
-  }, [issueDetail.body]);
+  const { issueDetail, loading, error } = useIssueDetail(id);
 
   if (loading) {
     return <Loading />;
@@ -56,35 +44,8 @@ const Detail = () => {
         comments={issueDetail.comments}
         img={issueDetail.avatar_url}
       />
-      <IssueDetailBodyStyle>
-        {text?.map((content: string, idx: number) => {
-          const firstWord = content.split(' ')[0];
-          const remainingContent = content.substring(firstWord.length).trim();
-          let headingLevel = 0;
-          if (
-            firstWord === '#' ||
-            firstWord === '##' ||
-            firstWord === '###' ||
-            firstWord === '####' ||
-            firstWord === '#####' ||
-            firstWord === '#######'
-          ) {
-            headingLevel = firstWord.length;
-          }
-          return (
-            <div
-              key={idx}
-              style={{
-                fontSize:
-                  headingLevel !== 0 ? `${24 - headingLevel * 2}px` : 'inherit',
-                fontWeight:
-                  headingLevel !== 0 ? 500 + headingLevel * 100 : 'normal',
-              }}
-            >
-              {remainingContent}
-            </div>
-          );
-        })}
+      <IssueDetailBodyStyle className="markdown-body">
+        <ReactMarkdown>{issueDetail.body || ''}</ReactMarkdown>
       </IssueDetailBodyStyle>
     </div>
   );

@@ -212,89 +212,219 @@
 - Case 02.
 
   - Issues && Detail
-
-  ```ts
-  const Issue = () => {
-    const { issues, loading, error } = useContext(IssueContext);
-
-    if (loading) {
-      return <Loading />;
-    }
-    if (error) {
-      return <ErrorScreen />;
-    }
-
-    return (
-      <>
-        {issues.map((issue, index) => {
-          if (issue.state !== 'img') {
-            return (
-              <IssueContent
-                key={issue.id}
-                id={issue.id}
-                title={issue.title}
-                user={issue.user}
-                updateAt={issue.updated_at}
-                comments={issue.comments}
-              />
-            );
-          } else {
-            return <IssueImg key={`${issue.src}-${index}`} src={issue.src} />;
-          }
-        })}
-      </>
-    );
-  };
-
-  export default Issue;
-  ```
-
-  해당 코드가 좀 이해하기에는 복잡성이 높다고 생각했고, 관심사의 분리가 제대로 되어있지 않다고 생각하여, 기능을 구현하는 함수는 Custom Hook으로 만들었고, 컴포넌트를 조금 더 세밀하게 쪼갤 수 있어서, 컴포넌트를 하나 더 만들었다.
-
-  ```ts
-  export const useIssues = () => {
-    const { issues, loading, error } = useContext(IssueContext);
-
-    return { issues, loading, error };
-  };
-  ```
-
-  Context API의 결과물을 가지고 올 수 있는 것을 Hook으로 따로 빼내서 관심사를 분리 시켜버렸다.
-
-  ```ts
-  export const renderIssue = (issue: issuesType, index: number) => {
-    if (issue.state !== 'img') {
-      return (
-        <IssueContent
-          key={issue.id}
-          id={issue.id}
-          title={issue.title}
-          user={issue.user}
-          updateAt={issue.updated_at}
-          comments={issue.comments}
-        />
-      );
-    } else {
-      return <IssueImg key={`${issue.src}-${index}`} src={issue.src} />;
-    }
-  };
-
-  const Issue = () => {
-    const { issues, loading, error } = useContext(IssueContext);
-
-    if (loading) {
-      return <Loading />;
-    }
-    if (error) {
-      return <ErrorScreen />;
-    }
-
-    return <>{issues.map(renderIssue)}</>;
-  };
-
-  export default Issue;
-  ```
-
-  서브 컴포넌트 파일을 따로 만들어버릴까 하다가 횡단 관심사라는 것이 생각나서, 컴포넌트를 만들어서 UI자체를 분할하되 절차지향으로 컴포넌트를 배치해서 연결성을 보여주는 것이 좋다고 생각하여 이렇게 코드를 작성했다. 그래서 main 컴포넌트인 issues 컴포넌트가 조금 더 가독성이 좋아보였다.
-
   
+    - Issues
+      ```ts
+      const Issue = () => {
+        const { issues, loading, error } = useContext(IssueContext);
+
+        if (loading) {
+          return <Loading />;
+        }
+        if (error) {
+          return <ErrorScreen />;
+        }
+
+        return (
+          <>
+            {issues.map((issue, index) => {
+              if (issue.state !== 'img') {
+                return (
+                  <IssueContent
+                    key={issue.id}
+                    id={issue.id}
+                    title={issue.title}
+                    user={issue.user}
+                    updateAt={issue.updated_at}
+                    comments={issue.comments}
+                  />
+                );
+              } else {
+                return <IssueImg key={`${issue.src}-${index}`} src={issue.src} />;
+              }
+            })}
+          </>
+        );
+      };
+
+      export default Issue;
+      ```
+
+      해당 코드가 좀 이해하기에는 복잡성이 높다고 생각했고, 관심사의 분리가 제대로 되어있지 않다고 생각하여, 기능을 구현하는 함수는 Custom Hook으로 만들었고, 컴포넌트를 조금 더 세밀하게 쪼갤 수 있어서, 컴포넌트를 하나 더 만들었다.
+
+      ```ts
+      export const useIssues = () => {
+        const { issues, loading, error } = useContext(IssueContext);
+
+        return { issues, loading, error };
+      };
+      ```
+
+      Context API의 결과물을 가지고 올 수 있는 것을 Hook으로 따로 빼내서 관심사를 분리 시켜버렸다.
+
+      ```ts
+      export const renderIssue = (issue: issuesType, index: number) => {
+        if (issue.state !== 'img') {
+          return (
+            <IssueContent
+              key={issue.id}
+              id={issue.id}
+              title={issue.title}
+              user={issue.user}
+              updateAt={issue.updated_at}
+              comments={issue.comments}
+            />
+          );
+        } else {
+          return <IssueImg key={`${issue.src}-${index}`} src={issue.src} />;
+        }
+      };
+
+      const Issue = () => {
+        const { issues, loading, error } = useContext(IssueContext);
+
+        if (loading) {
+          return <Loading />;
+        }
+        if (error) {
+          return <ErrorScreen />;
+        }
+
+        return <>{issues.map(renderIssue)}</>;
+      };
+
+      export default Issue;
+      ```
+
+      서브 컴포넌트 파일을 따로 만들어버릴까 하다가 횡단 관심사라는 것이 생각나서, 컴포넌트를 만들어서 UI자체를 분할하되 절차지향으로 컴포넌트를 배치해서 연결성을 보여주는 것이 좋다고 생각하여 이렇게 코드를 작성했다. 그래서 main 컴포넌트인 issues 컴포넌트가 조금 더 가독성이 좋아보였다.
+
+    - Detail
+      ```ts
+      const Detail = () => {
+        const { id } = useParams();
+        const [text, setText] = useState<string[] | null | undefined>([]);
+        const { issueDetail, loading, error, fetchIssueDetail } =
+          useContext(IssueDetailContext);
+
+        useEffect(() => {
+          if (id) {
+            fetchIssueDetail(id);
+          }
+        }, [id]);
+
+        useEffect(() => {
+          const bodySplit = issueDetail?.body?.split('\n');
+          setText(bodySplit || []);
+        }, [issueDetail.body]);
+
+        if (loading) {
+          return <Loading />;
+        }
+        if (error) {
+          return <ErrorScreen />;
+        }
+
+        return (
+          <div>
+            <IssueContent
+              id={issueDetail.number}
+              title={issueDetail.title}
+              user={issueDetail.login}
+              updateAt={issueDetail.updated_at}
+              comments={issueDetail.comments}
+              img={issueDetail.avatar_url}
+            />
+            <IssueDetailBodyStyle>
+              {text?.map((content: string, idx: number) => {
+                const firstWord = content.split(' ')[0];
+                const remainingContent = content.substring(firstWord.length).trim();
+                let headingLevel = 0;
+                if (
+                  firstWord === '#' ||
+                  firstWord === '##' ||
+                  firstWord === '###' ||
+                  firstWord === '####' ||
+                  firstWord === '#####' ||
+                  firstWord === '#######'
+                ) {
+                  headingLevel = firstWord.length;
+                }
+                return (
+                  <div
+                    key={idx}
+                    style={{
+                      fontSize:
+                        headingLevel !== 0 ? `${24 - headingLevel * 2}px` : 'inherit',
+                      fontWeight:
+                        headingLevel !== 0 ? 500 + headingLevel * 100 : 'normal',
+                    }}
+                  >
+                    {remainingContent}
+                  </div>
+                );
+              })}
+            </IssueDetailBodyStyle>
+          </div>
+        );
+      };
+      export default Detail;
+      ```
+
+      해당 코드 역시 관심사의 분리가 전혀 되어 있지 않다.
+      그리고 마크다운 형태의 문자열이기 때문에 해당 부분들은 컴파일하여 브라우저에 나타낼 수 있게 해야할 것으로 보인다.
+
+      ```ts
+      import { useContext, useEffect } from 'react';
+      import { IssueDetailContext } from '../api/IssueDetailContext';
+
+      export const useIssueDetail = (id: string | undefined) => {
+        const { issueDetail, loading, error, fetchIssueDetail } =
+          useContext(IssueDetailContext);
+
+        useEffect(() => {
+          if (id) {
+            fetchIssueDetail(id);
+          }
+        }, [id]);
+
+        return { issueDetail, loading, error };
+      };
+      ```
+
+      Context API의 결과물을 가지고 올 수 있는 것을 Hook으로 따로 빼내서 관심사를 분리 시켜버렸다.
+
+      ```ts
+      const Detail = () => {
+        const { id } = useParams();
+        const { issueDetail, loading, error } = useIssueDetail(id);
+
+        if (loading) {
+          return <Loading />;
+        }
+        if (error) {
+          return <ErrorScreen />;
+        }
+
+        return (
+          <div>
+            <IssueContent
+              id={issueDetail.number}
+              title={issueDetail.title}
+              user={issueDetail.login}
+              updateAt={issueDetail.updated_at}
+              comments={issueDetail.comments}
+              img={issueDetail.avatar_url}
+            />
+            <IssueDetailBodyStyle className="markdown-body">
+              <ReactMarkdown>{issueDetail.body || ''}</ReactMarkdown>
+            </IssueDetailBodyStyle>
+          </div>
+        );
+      };
+      export default Detail;
+      ```
+
+      ReactMarkdown 라이브러리를 통해서 issueDetail.body 를 통으로 받아와서 마크다운을 HTML로 파싱하는 작업을 한다.
+      그리고 issueDetail에 대한 관심사 분리를 통해서 useIssueDetail라는 Hook을 만들어서 사용하여 export 해온다.
+
+      

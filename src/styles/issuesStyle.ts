@@ -7,7 +7,7 @@ export const IssueDivStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #c3e0f4;
+  background-color: #000000;
   border-radius: 20px;
   box-shadow: 5px 5px 10px #5391b4;
   margin-bottom: 1%;
@@ -36,7 +36,7 @@ export const IssueDivStyle = styled.div`
         margin-right: 3%;
         font-size: 0.75rem;
         font-weight: 900;
-        color: #2e2e2e;
+        color: #ffffff;
       }
 
       & > span:nth-child(2) {
@@ -45,7 +45,7 @@ export const IssueDivStyle = styled.div`
         margin-top: 1%;
         font-size: 1.2rem;
         font-weight: 900;
-        color: #000000;
+        color: #ffffff;
       }
     }
 
@@ -60,7 +60,7 @@ export const IssueDivStyle = styled.div`
         margin-right: 3%;
         font-size: 1rem;
         font-weight: 900;
-        color: #2e2e2e;
+        color: #ffffff;
       }
 
       & > span:nth-child(2) {
@@ -68,7 +68,7 @@ export const IssueDivStyle = styled.div`
         margin-right: 3%;
         font-size: 1rem;
         font-weight: 900;
-        color: #2e2e2e;
+        color: #ffffff;
       }
     }
   }
@@ -82,7 +82,7 @@ export const IssueDivStyle = styled.div`
     justify-content: center;
     font-size: 1.1rem;
     font-weight: 900;
-    color: #000000;
+    color: #ffffff;
 
     & > span:nth-child(1) {
       display: block;
@@ -101,7 +101,7 @@ export const IssueDetailDivStyle = styled.div`
   border-bottom: 2px solid black;
   display: flex;
   align-items: center;
-  background-color: #c3e0f4;
+  background-color: #000000;
   border-radius: 20px;
   box-shadow: 5px 5px 10px #5391b4;
   margin-bottom: 1%;
@@ -146,7 +146,7 @@ export const IssueDetailDivStyle = styled.div`
         margin-right: 3%;
         font-size: 0.75rem;
         font-weight: 900;
-        color: #2e2e2e;
+        color: #ffffff;
       }
 
       & > span:nth-child(2) {
@@ -155,7 +155,7 @@ export const IssueDetailDivStyle = styled.div`
         margin-top: 1%;
         font-size: 1.2rem;
         font-weight: 900;
-        color: #000000;
+        color: #ffffff;
       }
     }
 
@@ -170,7 +170,7 @@ export const IssueDetailDivStyle = styled.div`
         margin-right: 3%;
         font-size: 1rem;
         font-weight: 900;
-        color: #2e2e2e;
+        color: #ffffff;
       }
 
       & > span:nth-child(2) {
@@ -178,7 +178,7 @@ export const IssueDetailDivStyle = styled.div`
         margin-right: 3%;
         font-size: 1rem;
         font-weight: 900;
-        color: #2e2e2e;
+        color: #ffffff;
       }
     }
   }
@@ -192,7 +192,7 @@ export const IssueDetailDivStyle = styled.div`
     justify-content: center;
     font-size: 1.1rem;
     font-weight: 900;
-    color: #000000;
+    color: #ffffff;
 
     & > span:nth-child(1) {
       display: block;

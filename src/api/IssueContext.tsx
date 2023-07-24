@@ -36,7 +36,7 @@ export const IssueProvider = ({ children }: any) => {
   const fetchIssue = async () => {
     setLoading(true);
     try {
-      if (process.env.REACT_APP_GITHUB_API_URL) {
+      if (process.env.REACT_APP_GITHUB_API_URL && accessToken) {
         const items: issuesType[] = []; // 이슈 데이터를 저장할 지역 변수
         const response = await fetch(
           `${process.env.REACT_APP_GITHUB_API_URL}/repos/facebook/react/issues?page=${page}&per_page=${perPage}&sort=comments`,
@@ -64,7 +64,7 @@ export const IssueProvider = ({ children }: any) => {
           if (i % 4 === 3) {
             items.push({
               state: 'img',
-              src: `https://blog.kakaocdn.net/dn/0aDVr/btrbQaX9WJr/p63pboivEKfeoYcIDKQYN1/img.jpg`,
+              src: `https://freight.cargo.site/t/original/i/4578b55ce1658ae2b74841d9148db68944f8461b1d393d29101a372fa80bef12/Logotype_Before_after.jpg`,
             });
           }
         }
