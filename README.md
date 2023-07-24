@@ -109,6 +109,9 @@
  ┃ ┣ 📜IssueImg.tsx
  ┃ ┣ 📜Layout.tsx
  ┃ ┗ 📜Loading.tsx
+ ┣ 📂hooks
+ ┃ ┣ 📜useFetchDetail.ts
+ ┃ ┗ 📜useFetchIssues.ts
  ┣ 📂pages
  ┃ ┣ 📜Detail.tsx
  ┃ ┣ 📜Issue.tsx
@@ -118,7 +121,8 @@
  ┣ 📜App.tsx
  ┣ 📜GlobalStyle.ts
  ┣ 📜index.tsx
- ┗ 📜react-app-env.d.ts
+ ┣ 📜react-app-env.d.ts
+ ┗ 📜router.tsx
 ```
 
 ### ✨ GitHub Issues Web Page
